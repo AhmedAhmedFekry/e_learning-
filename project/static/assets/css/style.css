@@ -776,8 +776,9 @@ section {
 }
 
 .courses .trainer .trainer-profile img {
-  max-width: 50px;
-  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .courses .trainer .trainer-profile span {
@@ -1561,3 +1562,9 @@ section {
   color: #fff;
   text-decoration: none;
 }
+.courses .course-item .img-r {
+  width: 100%;
+  /* height: auto; */
+  height: 150px;
+  margin: 0 auto;
+  }

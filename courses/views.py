@@ -14,8 +14,13 @@ from .forms import ModuleFormSet
 
 
 def home(request):
-    return render(request,'pages/home.html',{})
+    courses = Course.objects.all()
+    return render(request,'pages/home.html',{'courses':courses})
 
+
+def course_detail(request,course_id):
+    course = Course.objects.filter(id=course_id,owner=request.user)
+    return render(request,'pages/home.html',{'course':course})
 class OwnerMixin(object):
     def get_queryset(self):
         qs = super().get_queryset()
