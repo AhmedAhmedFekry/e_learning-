@@ -13,6 +13,9 @@ from .models import Course, Module, Content
 from .forms import ModuleFormSet
 
 
+def home(request):
+    return render(request,'pages/home.html',{})
+
 class OwnerMixin(object):
     def get_queryset(self):
         qs = super().get_queryset()
@@ -177,5 +180,3 @@ class ContentOrderView(CsrfExemptMixin,
                        module__course__owner=request.user).update(order=order)
         return self.render_json_response({'saved': 'OK'})
 
-def home(request):
-    return render(request,'base/base.html',{})
