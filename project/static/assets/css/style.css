@@ -1568,3 +1568,17 @@ section {
   height: 150px;
   margin: 0 auto;
   }
+
+
+  .btn-create{
+    margin-left: 22px;
+    background: #5fcf80;
+    color: #fff;
+    border-radius: 50px;
+    padding: 8px 25px;
+    white-space: nowrap;
+    transition: 0.3s;
+    font-size: 14px;
+    display: inline-block;
+    border: none;
+  }
