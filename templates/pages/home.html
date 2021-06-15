@@ -9,52 +9,82 @@
 
   <main id="main">
 
-   
-   
+     <!-- ======= Popular Courses Section ======= -->
+  <section id="popular-courses" class="courses">
+    <div class="container" data-aos="fade-up">
 
-    <!-- ======= Popular Courses Section ======= -->
-    <section id="popular-courses" class="courses">
-      <div class="container" data-aos="fade-up">
+      <div class="section-title" style="margin-bottom: 20px;">
+        <h2>Courses</h2>
+   
+          {% if subject %}
+          <p>{{ subject.title }} courses</p>
+          {% else %}
+          <p> All courses</p>
+        
+          {% endif %}
+ 
+        
 
-        <div class="section-title">
-          <h2>Courses</h2>
-          <p>Popular Courses</p>
+        <a href="{% url "course_create" %}" class="get-started-btn" style="float: right;">Create new course</a>
+    
+      </div>
+
+      <div class="row" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-lg-4">
+          <ul class="nav nav-tabs flex-column">
+            <li {% if not subject %}class="selected nav-item"{% endif %}>
+              <a href="{% url 'course_list' %}">All</a>
+              </li>
+              {% for s in subjects %}
+              <li {% if subject == s %}class="selected nav-item"{% endif %}>
+              <a href="{% url 'course_list_subject' s.slug %}">
+              {{ s.title }}
+              <span>{{ s.total_courses }} courses</span>
+              </a>
+              </li>
+              {% endfor %}
+        
+          </ul>
         </div>
+       {% for course  in courses  %}
+       <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+        <div class="course-item">
+          <img src="{{ course.image.url }}" class="img-fluid img-r" alt="...">
+          <div class="course-content">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4>{{course.subject}}</h4>
+              <p class="price">$169</p>
+            </div>
 
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
-         {% for course  in courses  %}
-         <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-          <div class="course-item">
-            <img src="{{ course.image.url }}" class="img-fluid" alt="...">
-            <div class="course-content">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4>{{course.subject}}</h4>
-                <p class="price">$169</p>
+            <h3><a href="{% url 'course_detail' course.slug %}">{{course.title}}</a></h3>
+
+            <div class="trainer d-flex justify-content-between align-items-center">
+              <div class="trainer-profile d-flex align-items-center">
+                <img src="{{course.owner.profile_image.url}}" class="img-fluid" alt="">
+                <span>{{course.owner}}</span>
               </div>
-
-              <h3><a href="course-details.html">{{course.title}}</a></h3>
-              <p>{{course.overview}}</p>
-              <div class="trainer d-flex justify-content-between align-items-center">
-                <div class="trainer-profile d-flex align-items-center">
-                  <img src="{{course.owner.profile_image.url}}" class="img-fluid" alt="">
-                  <span>{{course.owner}}</span>
-                </div>
-                <div class="trainer-rank d-flex align-items-center">
-                  <i class="bx bx-user"></i>&nbsp;50
-                  &nbsp;&nbsp;
-                  <i class="bx bx-heart"></i>&nbsp;65
-                </div>
+              <div class="trainer-rank d-flex align-items-center">
+                <i class="bx bx-user"></i>&nbsp;50
+                &nbsp;&nbsp;
+                <i class="bx bx-heart"></i>&nbsp;65
               </div>
             </div>
           </div>
-        </div> <!-- End Course Item-->
-         {% endfor %}
-         
-
         </div>
+      </div> <!-- End Course Item-->
+      {% empty %}
+      <p>You haven't created any courses yet.</p>
+       {% endfor %}
+       
 
       </div>
-    </section><!-- End Popular Courses Section -->
+
+    </div>
+  </section><!-- End Popular Courses Section -->
+
+
+
+    
 
     
   </main><!-- End #main -->
