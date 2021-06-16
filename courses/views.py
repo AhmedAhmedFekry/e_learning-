@@ -1,3 +1,4 @@
+from students.forms import CourseEnrollForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic.base import TemplateResponseMixin, View
@@ -207,8 +208,8 @@ class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/manage/course/course_detail.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['enroll_form'] = CourseEnrollForm(
-    #                                initial={'course':self.object})
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['enroll_form'] = CourseEnrollForm(
+                                   initial={'course':self.object})
+        return context

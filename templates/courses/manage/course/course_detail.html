@@ -11,7 +11,29 @@
     <!-- ======= Cource Details Section ======= -->
     <section id="course-details" class="course-details">
       <div class="container" data-aos="fade-up">
-
+        <div class="section-title" style="margin-bottom: 20px;">
+          <h2>Course</h2>
+     
+         <p> {{object.title }}</p> 
+   
+         
+          {% if request.user.is_authenticated %}
+          <form action="{% url "student_enroll_course" %}" method="post">
+          {{ enroll_form }}
+          {% csrf_token %}
+          <input type="submit"  class="get-started-btn"  value="Enroll now" style="float: right;border:none;">
+          </form>
+          {% else %}
+          <a href="{% url "student_registration" %}" class="get-started-btn" style="float: right;" >
+          Register to enroll
+          </a>
+          {% endif %}
+   
+  
+         
+      
+        </div>
+  
         <div class="row">
           <div class="col-lg-8">
             <img src="assets/img/course-details.jpg" class="img-fluid" alt="">
@@ -70,6 +92,7 @@
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tab-5">Iusto ut expedita aut</a>
               </li>
+             
             </ul>
           </div>
           <div class="col-lg-9 mt-4 mt-lg-0">
