@@ -40,6 +40,7 @@ INSTALLED_APPS = [
      'courses.apps.CoursesConfig',
        'usersapp',
        'crispy_forms',
+       'students.apps.StudentsConfig',
 
 
 ]
