@@ -41,6 +41,7 @@ INSTALLED_APPS = [
        'usersapp',
        'crispy_forms',
        'students.apps.StudentsConfig',
+       'embed_video',
 
 
 ]
