@@ -43,6 +43,7 @@ INSTALLED_APPS = [
        'students.apps.StudentsConfig',
        'embed_video',
        'memcache_status',
+       'rest_framework',
 
 
 ]
@@ -134,7 +135,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-
+REST_FRAMEWORK = {
+ 'DEFAULT_PERMISSION_CLASSES': [
+ 'rest_framework.permissions.jangoModelPermissionsOrAnonReadOnly'
+ ]
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
