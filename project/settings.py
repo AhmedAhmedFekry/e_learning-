@@ -44,7 +44,8 @@ INSTALLED_APPS = [
        'embed_video',
        'memcache_status',
        'rest_framework',
-       'chat'
+       'chat',
+        'channels',
 
 
 ]
@@ -166,3 +167,5 @@ CACHES = {
 # CACHE_MIDDLEWARE_ALIAS = 'default'
 # CACHE_MIDDLEWARE_SECONDS = 60 * 15  # 15 minutes
 # CACHE_MIDDLEWARE_KEY_PREFIX = 'project'
+
+ASGI_APPLICATION = 'project.routing.application'
