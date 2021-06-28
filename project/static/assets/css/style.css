@@ -1584,9 +1584,9 @@ section {
   }
 
   .active{
-color: #5fcf80;
+color: #5fcf80!important;
   }
 
   .nav-tabs li a {
-    color: #37423b!important;
+    color: #37423b;
   }
