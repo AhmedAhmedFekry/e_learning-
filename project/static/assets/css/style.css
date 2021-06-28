@@ -1582,3 +1582,11 @@ section {
     display: inline-block;
     border: none;
   }
+
+  .active{
+color: #5fcf80;
+  }
+
+  a {
+    color: #37423b;
+  }
