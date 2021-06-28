@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from students.forms import CourseEnrollForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
@@ -15,6 +16,8 @@ from .models import Course, Module, Content, Subject
 from .forms import ModuleFormSet
 from django.db.models import Count
 from django.core.cache import cache
+from django.contrib.auth.decorators import login_required
+
 def home(request):
     courses = Course.objects.all()
     return render(request,'pages/home.html',{'courses':courses})
@@ -221,9 +224,21 @@ class CourseListView(TemplateResponseMixin, View):
                                         'subject': subject,
                                         'courses': courses})
 
+@login_required(login_url="/login")  # Check login
+def addlike(request):
+    url = request.META.get("HTTP_REFERER")
+    user = request.user
+    if request.method == "POST":
+        course_id = request.POST.get("product_id")
+        course_obj = Course.objects.get(id=course_id)
 
+        if user in course_obj.like.all():
+            course_obj.like.remove(user)
 
+        else:
+            course_obj.like.add(request.user)
 
+    return HttpResponseRedirect(url)
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/manage/course/course_detail.html'

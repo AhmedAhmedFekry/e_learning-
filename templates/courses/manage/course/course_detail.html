@@ -15,8 +15,25 @@
           <h2>Course</h2>
      
          <p> {{object.title }}</p> 
-   
-         
+
+         {% if request.user.is_authenticated %}
+         <form action="{% url 'addlike' %}" method="POST" style="display: inline;">
+         {% csrf_token %}
+         <input type="hidden" name="product_id" value="{{object.id}}">
+         {%if user not in object.like.all%}
+         <input type="submit"  class="get-started-btn"  value="add to list" style="float: right;border:none;">
+
+         {%else%}
+         <input type="submit"  class="get-started-btn"  value="remove to list" style="float: right;border:none;">
+
+         {%endif%}
+
+        </form>
+        {% else %}
+        <a href="{% url "student_registration" %}" class="get-started-btn" style="float: right;" >
+        Register to enroll
+        </a>
+        {% endif %}
           {% if request.user.is_authenticated %}
           <form action="{% url "student_enroll_course" %}" method="post">
           {{ enroll_form }}
