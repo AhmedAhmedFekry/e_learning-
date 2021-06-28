@@ -1587,6 +1587,6 @@ section {
 color: #5fcf80;
   }
 
-  a {
-    color: #37423b;
+  .nav-tabs li a {
+    color: #37423b!important;
   }
