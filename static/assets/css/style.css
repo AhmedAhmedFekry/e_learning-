@@ -1584,7 +1584,8 @@ section {
   }
 
   .active{
-color: #5fcf80!important;
+    border-color: #5fcf80!important;
+    color: #5fcf80!important;
   }
 
   .nav-tabs li a {

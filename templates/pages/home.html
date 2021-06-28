@@ -32,12 +32,12 @@
       <div class="row" data-aos="zoom-in" data-aos-delay="100">
         <div class="col-lg-4">
           <ul class="nav nav-tabs flex-column">
-            <li >
+            <li {% if not subject %}class="active"{% endif %} style="    border: 0;padding: 12px 15px 12px 0;transition: 0.3s;color: #37423b;border-radius: 0;border-right: 2px solid #e2e7e4;font-weight: 600;font-size: 15px;">
               <a href="{% url 'course_list' %}"{% if not subject %}class="active"{% endif %}>All</a>
               </li>
               {% for s in subjects %}
-              <li style="    border: 0;padding: 12px 15px 12px 0;transition: 0.3s;color: #37423b;border-radius: 0;border-right: 2px solid #e2e7e4;font-weight: 600;font-size: 15px;">
-              <a href="{% url 'course_list_subject' s.slug %}">
+              <li {% if subject == s %}class="active"{% endif %} style="    border: 0;padding: 12px 15px 12px 0;transition: 0.3s;color: #37423b;border-radius: 0;border-right: 2px solid #e2e7e4;font-weight: 600;font-size: 15px;">
+              <a href="{% url 'course_list_subject' s.slug %}" {% if subject == s %}class="active"{% endif %}>
               {{ s.title }}
               <span>{{ s.total_courses }} courses</span>
               </a>
