@@ -32,6 +32,9 @@ class Course(models.Model):
     students = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                       related_name='courses_joined',
                                       blank=True)
+    like = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                      related_name='courses_liked',
+                                      blank=True)
     image = models.ImageField(null=True)
 
     class Meta:
