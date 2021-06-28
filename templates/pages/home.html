@@ -36,7 +36,7 @@
               <a href="{% url 'course_list' %}">All</a>
               </li>
               {% for s in subjects %}
-              <li {% if subject == s %}class="selected nav-item"{% endif %}>
+              <li style="    border: 0;padding: 12px 15px 12px 0;transition: 0.3s;color: #37423b;border-radius: 0;border-right: 2px solid #e2e7e4;font-weight: 600;font-size: 15px;">
               <a href="{% url 'course_list_subject' s.slug %}">
               {{ s.title }}
               <span>{{ s.total_courses }} courses</span>
