@@ -6,64 +6,135 @@
 {% endblock %}
 
 {% block content %}
-  {% with course=module.course %}
-    <h1>Course "{{ course.title }}"</h1>
-    <div class="contents">
-      <h3>Modules</h3>
-      <ul id="modules">
-        {% for m in course.modules.all %}
-          <li data-id="{{ m.id }}" {% if m == module %}
-           class="selected"{% endif %}>
-            <a href="{% url "module_content_list" m.id %}">
-              <span>
-                Module <span class="order">{{ m.order|add:1 }}</span>
-              </span>
-              <br>
-              {{ m.title }}
-            </a>
-          </li>
-        {% empty %}
-          <li>No modules yet.</li>
-        {% endfor %}
-      </ul>
-      <p><a href="{% url "course_module_update" course.id %}">
-      Edit modules</a></p>
-    </div>
-    <div class="module">
-      <h2>Module {{ module.order|add:1 }}: {{ module.title }}</h2>
-      <h3>Module contents:</h3>
 
-      <div id="module-contents">
-        {% for content in module.contents.all %}
-          <div data-id="{{ content.id }}">
-            {% with item=content.item %}
-              <p>{{ item }} ({{ item|model_name }})</p>
-              <a href="{% url "module_content_update" module.id item|model_name item.id %}">
-                Edit
-              </a>
-              <form action="{% url "module_content_delete" content.id %}" method="post">
-                <input type="submit" value="Delete">
-                {% csrf_token %}
-              </form>
-            {% endwith %}
-          </div>
+
+<div class="container">
+  {% with course=module.course %}
+
+  <div class="section-title" style="margin-bottom: 20px;">
+    <h2>{{ course.title }}</h2>
+    <p>My Modules</p>
+
+    <a href="{% url 'course_module_update' course.id %}" class="get-started-btn" style="float: right;">Edit Modules</a>
+
+  </div>
+
+  
+  <!-- ======= Cource Details Tabs Section ======= -->
+  <section id="cource-details-tabs" class="cource-details-tabs">
+    <div class="container" data-aos="fade-up">
+  
+      <div class="row">
+        <div class="col-lg-3">
+          <ul class="nav nav-tabs flex-column">
+            {% for m in course.modules.all %}
+   
+        <li class="nav-item">
+          <a class="nav-link  show" data-toggle="tab" href="#{{m.title}}">
+            <span>
+            Module <span class="order">{{ m.order|add:1 }}</span>
+          </span>:&nbsp;{{ m.title }}</a>
+        </li>
         {% empty %}
-          <p>This module has no contents yet.</p>
-        {% endfor %}
+        <li>No modules yet.</li>
+            {% endfor %}
+           
+            
+          
+           
+          </ul>
+        </div>
+        <div class="col-lg-9 mt-4 mt-lg-0">
+          <div class="tab-content">
+            {% for m in course.modules.all %}
+            <div class="tab-pane  show" id="{{m.title}}">
+              <div class="row">
+                <div class="col-lg-8 details order-2 order-lg-1">
+                  {% for content in m.contents.all %}
+                  <h3>{{content}}</h3>
+                  {% endfor %}
+                  <p class="font-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
+                  <p></p>
+                </div>
+                <div class="col-lg-4 text-center order-1 order-lg-2">
+                  <img src="assets/img/course-details-tab-1.png" alt="" class="img-fluid">
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          
+          </div>
+        </div>
       </div>
-      <h3>Add new content:</h3>
-      <ul class="content-types">
-        <li><a href="{% url "module_content_create" module.id "text" %}">
-        Text</a></li>
-        <li><a href="{% url "module_content_create" module.id "image" %}">
-        Image</a></li>
-        <li><a href="{% url "module_content_create" module.id "video" %}">
-        Video</a></li>
-        <li><a href="{% url "module_content_create" module.id "file" %}">
-        File</a></li>
-      </ul>
+  
     </div>
-  {% endwith %}
+  </section><!-- End Cource Details Tabs Section -->
+
+
+
+  <h1>Course "{{ course.title }}"</h1>
+  <div class="contents">
+    <h3>Modules</h3>
+    <ul id="modules">
+      {% for m in course.modules.all %}
+        <li data-id="{{ m.id }}" {% if m == module %}
+         class="selected"{% endif %}>
+          <a href="{% url "module_content_list" m.id %}">
+            <span>
+              Module <span class="order">{{ m.order|add:1 }}</span>
+            </span>
+            <br>
+            {{ m.title }}
+          </a>
+        </li>
+      {% empty %}
+        <li>No modules yet.</li>
+      {% endfor %}
+    </ul>
+    <p><a href="{% url "course_module_update" course.id %}">
+    Edit modules</a></p>
+  </div>
+  <div class="module">
+    <h2>Module {{ module.order|add:1 }}: {{ module.title }}</h2>
+    <h3>Module contents:</h3>
+
+    <div id="module-contents">
+      {% for content in module.contents.all %}
+        <div data-id="{{ content.id }}">
+          {% with item=content.item %}
+            <p>{{ item }} ({{ item|model_name }})</p>
+            <a href="{% url "module_content_update" module.id item|model_name item.id %}">
+              Edit
+            </a>
+            <form action="{% url "module_content_delete" content.id %}" method="post">
+              <input type="submit" value="Delete">
+              {% csrf_token %}
+            </form>
+          {% endwith %}
+        </div>
+      {% empty %}
+        <p>This module has no contents yet.</p>
+      {% endfor %}
+    </div>
+    <h3>Add new content:</h3>
+    <ul class="content-types">
+      <li><a href="{% url "module_content_create" module.id "text" %}">
+      Text</a></li>
+      <li><a href="{% url "module_content_create" module.id "image" %}">
+      Image</a></li>
+      <li><a href="{% url "module_content_create" module.id "video" %}">
+      Video</a></li>
+      <li><a href="{% url "module_content_create" module.id "file" %}">
+      File</a></li>
+    </ul>
+  </div>
+{% endwith %}
+</div>
+
+{% with course=module.course %}
+
+
+{% endwith %}
 {% endblock %}
 
 {% block domready %}
