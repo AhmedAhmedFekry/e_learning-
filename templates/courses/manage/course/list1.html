@@ -3,7 +3,7 @@
 {% block title %}My courses{% endblock %}
 
 {% block content %}
-
+  <h1>My courses</h1>
 
 
 
@@ -41,9 +41,8 @@
             <p>{{course.overview|truncatechars:70 }}</p>
             <div class="trainer d-flex justify-content-between align-items-center">
               <div class="trainer-profile d-flex align-items-center">
-                {% if course.modules.count > 0 %}
                 <a href="{% url "module_content_list" course.modules.first.id %}">
-                  Edit Course</a>   {% endif %}
+                  Edit Course</a>
               </div>
               <div class="trainer-rank d-flex align-items-center">
                
@@ -77,6 +76,28 @@
   </section><!-- End Popular Courses Section -->
 
 
+
+  <div class="module">
+    {% for course in object_list %}
+      <div class="course-info">
+        <h3>{{ course.title }}</h3>
+        <p>
+          <a href="{% url "course_edit" course.id %}">Edit</a>
+          <a href="{% url "course_delete" course.id %}">Delete</a>
+          <a href="{% url "course_module_update" course.id %}">Edit modules</a>
+          {% if course.modules.count > 0 %}
+            <a href="{% url "module_content_list" course.modules.first.id %}">
+            Manage contents</a>
+          {% endif %}
+        </p>
+      </div>
+    {% empty %}
+      <p>You haven't created any courses yet.</p>
+    {% endfor %}
+    <p>
+      <a href="{% url "course_create" %}" class="button">Create new course</a>
+    </p>
+  </div>
 
 {% endblock %}
 
