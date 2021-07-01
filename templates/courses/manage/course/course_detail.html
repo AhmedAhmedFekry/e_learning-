@@ -122,9 +122,18 @@
               <div class="tab-pane  show" id="{{c.title}}">
                 <div class="row">
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>{{c}}</h3>
-                    <p class="font-italic">{{c.description}}</p>
-                    <p></p>
+                    <h2 style="color:#5fcf80!important">{{c}}</h2>
+                    <p class="font-italic" style="padding-left: 20px;">{{c.description}}</p>
+                    <h4>Module contents:</h4>
+                    {% for content in c.contents.all %}
+                    {% with item=content.item %}
+            
+  
+                    <h5 > {{ item }}  </h5>
+                    <p style="padding-left: 20px;">   {{ item.render }}</p>
+                    
+                    {% endwith %}
+                    {% endfor %}
                   </div>
                   <div class="col-lg-4 text-center order-1 order-lg-2">
                     <img src="assets/img/course-details-tab-1.png" alt="" class="img-fluid">
