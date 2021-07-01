@@ -50,11 +50,24 @@
             <div class="tab-pane  show" id="{{m.title}}">
               <div class="row">
                 <div class="col-lg-8 details order-2 order-lg-1">
+                  <h3>Module contents:</h3>
                   {% for content in m.contents.all %}
-                  <h3>{{content}}</h3>
+                  {% with item=content.item %}
+          
+
+                  <p> {{ item }} ({{ item|model_name }}) </p>
+                  <p>  {{ item.render }}</p>
+                  <a  class="get-started-btn" style="float: left;"  href="{% url "module_content_update" module.id item|model_name item.id %}">
+                    Edit
+                  </a>
+                  <form action="{% url "module_content_delete" content.id %}" method="post">
+                    <input type="submit" style="border: none;" class="get-started-btn" value="Delete">
+                    {% csrf_token %}
+                  </form>
+                  {% endwith %}
                   {% endfor %}
-                  <p class="font-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
                   <p></p>
+                 
                 </div>
                 <div class="col-lg-4 text-center order-1 order-lg-2">
                   <img src="assets/img/course-details-tab-1.png" alt="" class="img-fluid">
