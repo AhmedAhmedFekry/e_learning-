@@ -43,7 +43,7 @@
   <header id="header" class="fixed-top" >
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo mr-auto"><a href="index.html">Mentor</a></h1>
+      <h1 class="logo mr-auto"><a href="index.html">E-learning</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png' %}" alt="" class="img-fluid"></a>-->
 
@@ -60,6 +60,11 @@
             {% endif %}
             {% if request.user.is_authenticated %}
             <ul>
+             
+            </ul>
+            <ul>
+              <li> <a href="{% url 'student_course_list' %}">Enroll Course</a></li>
+              <li> <a href="{% url 'manage_course_list' %}">Created Course </a></li>
               <li><a href="{% url 'logout' %}">Log Out</a></li>
             </ul>
          
