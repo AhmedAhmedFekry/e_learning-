@@ -15,7 +15,7 @@
 {% block domready %}
 
 var url = 'wss://' + window.location.host +
-'/ws/chat/room/' + '{{ course.id }}/';
+'/chat/room/' + '{{ course.id }}/';
 var chatSocket = new WebSocket(url);
 
 chatSocket.onmessage = function(e) {
