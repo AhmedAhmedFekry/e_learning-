@@ -6,35 +6,153 @@
 {% endblock %}
 
 {% block content %}
-  <h1>
-    {{ module.title }}
-  </h1>
-  <div class="contents">
-    <h3>Modules</h3>
-    <ul id="modules">
-      {% for m in object.modules.all %}
-        <li data-id="{{ m.id }}" {% if m == module %}class="selected"{% endif %}>
-          <a href="{% url "student_course_detail_module" object.id m.id %}">
-            <span>
-              Module <span class="order">{{ m.order|add:1 }}</span>
-            </span>
-            <br>
-            {{ m.title }}
-          </a>
+ 
+
+   <!-- ======= Cource Details Section ======= -->
+   <section id="course-details" class="course-details">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title" style="margin-bottom: 20px;">
+        <h2>Course</h2>
+   
+       <p> {{object.title }}</p> 
+
+       {% if request.user.is_authenticated %}
+       <form action="{% url 'addlike' %}" method="POST" style="display: inline;">
+       {% csrf_token %}
+       <input type="hidden" name="product_id" value="{{object.id}}">
+       {%if user not in object.like.all%}
+       <input type="submit"  class="get-started-btn"  value="add to list" style="float: right;border:none;">
+
+       {%else%}
+       <input type="submit"  class="get-started-btn"  value="remove to list" style="float: right;border:none;">
+
+       {%endif%}
+
+      </form>
+      {% else %}
+      <a href="{% url "student_registration" %}" class="get-started-btn" style="float: right;" >
+      Register to enroll
+      </a>
+      {% endif %}
+        {% if request.user.is_authenticated %}
+        <form action="{% url "student_enroll_course" %}" method="post">
+        {{ enroll_form }}
+        {% csrf_token %}
+        {% if user in object.students.all %}
+        <a  class="get-started-btn"    href="{% url 'chat:course_chat_room' object.id %}" style="float: right;border:none;">Chat Room</a>
+        
+        {% else %}
+        <input type="submit"  class="get-started-btn"  value="Enroll now" style="float: right;border:none;">
+
+        {% endif %}
+        </form>
+        {% else %}
+        <a href="{% url "student_registration" %}" class="get-started-btn" style="float: right;" >
+        Register to enroll
+        </a>
+        {% endif %}
+ 
+
+       
+    
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <img src="{{object.image.url}}" class="img-fluid" alt="">
+          <h3>{{object.title }}</h3>
+          <p>
+            {{object.overview}}
+          </p>
+        </div>
+        <div class="col-lg-4">
+
+          <div class="course-info d-flex justify-content-between align-items-center">
+            <h5>Trainer</h5>
+            <p><a href="#">{{ object.owner.first_name}} {{ object.owner.last_name}}</a></p>
+          </div>
+
+          <div class="course-info d-flex justify-content-between align-items-center">
+            <h5>Course Fee</h5>
+            <p>${{object.price}}</p>
+          </div>
+          <div class="course-info d-flex justify-content-between align-items-center">
+            <h5>Number Students</h5>
+            <p>{{object.students.count}}</p>
+          </div>
+          <div class="course-info d-flex justify-content-between align-items-center">
+            <h5>Number Modules</h5>
+            <p>{{object.modules.count }}</p>
+          </div>
+
+          <div class="course-info d-flex justify-content-between align-items-center">
+            <h5>Schedule</h5>
+            <p>5.00 pm - 7.00 pm</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Cource Details Section -->
+
+  <!-- ======= Cource Details Tabs Section ======= -->
+  <section id="cource-details-tabs" class="cource-details-tabs">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+        <div class="col-lg-3">
+          <ul class="nav nav-tabs flex-column">
+            {% with  object.modules.all  as  v %}
+            {% for c in v %}
+   
+        <li class="nav-item">
+          <a class="nav-link  show" data-toggle="tab" href="#{{c.title}}">{{c}}</a>
         </li>
-      {% empty %}
-        <li>No modules yet.</li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="module">
-    {% cache 600 module_contents module %}
-      {% for content in module.contents.all %}
-        {% with item=content.item %}
-          <h2>{{ item.title }}</h2>
-          {{ item.render }}
-        {% endwith %}
-      {% endfor %}
-    {% endcache %}
-  </div>
+            {% endfor %}
+            {% endwith %}
+            
+          
+           
+          </ul>
+        </div>
+        <div class="col-lg-9 mt-4 mt-lg-0">
+          <div class="tab-content">
+            {% with  object.modules.all  as  v %}
+            {% for c in v %}
+            <div class="tab-pane  show" id="{{c.title}}">
+              <div class="row">
+                <div class="col-lg-8 details order-2 order-lg-1">
+                  <h2 style="color:#5fcf80!important">{{c}}</h2>
+                  <p class="font-italic" style="padding-left: 20px;">{{c.description}}</p>
+                  <h4>Module contents:</h4>
+                  {% for content in c.contents.all %}
+                  {% with item=content.item %}
+          
+
+                  <h5 > {{ item }}  </h5>
+                  <p style="padding-left: 20px;">   {{ item.render }}</p>
+                  
+                  {% endwith %}
+                  {% endfor %}
+                </div>
+                <div class="col-lg-4 text-center order-1 order-lg-2">
+                  <img src="assets/img/course-details-tab-1.png" alt="" class="img-fluid">
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% endwith %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Cource Details Tabs Section -->
+
+</main><!-- End #main -->
+
+
+
+
 {% endblock %}
