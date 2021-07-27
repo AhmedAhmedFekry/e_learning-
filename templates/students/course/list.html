@@ -19,4 +19,52 @@
         to enroll in a course.
       </p>
     {% endfor %}
-  </div>{% endblock %}
+
+    
+  </div>
+  
+     <!-- ======= Popular Courses Section ======= -->
+     <section id="popular-courses" class="courses">
+      <div class="container" data-aos="fade-up">
+  
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+         
+         {% for course  in object_list  %}
+         <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+          <div class="course-item">
+            <img src="{{ course.image.url }}" class="img-fluid img-r" alt="...">
+            <div class="course-content">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>{{course.subject}}</h4>
+                <p class="price">${{course.price}}</p>
+              </div>
+  <div  class="d-flex justify-content-between align-items-center mb-3"><h3><a href="{% url 'course_detail' course.slug %}">{{course.title}}</a></h3>
+    <p><a href="{% url "student_course_detail" course.id %}">
+      Access contents</a></p></div>
+              
+              <div class="trainer d-flex justify-content-between align-items-center">
+                <div class="trainer-profile d-flex align-items-center">
+                  <img src="{{course.owner.profile_image.url}}" class="img-fluid" alt="">
+                  <span>{{course.owner}}</span>
+                </div>
+                <div class="trainer-rank d-flex align-items-center">
+                  <i class="bx bx-user"></i>&nbsp;{{course.students.count}}
+                  &nbsp;&nbsp;
+                  <i class="bx bx-heart"></i>&nbsp;{{course.like.count}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- End Course Item-->
+        {% empty %}
+        <p>You haven't created any courses yet.</p>
+         {% endfor %}
+         
+  
+        </div>
+  
+      </div>
+    </section><!-- End Popular Courses Section -->
+  
+  
+  {% endblock %}
